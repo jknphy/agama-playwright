@@ -3,6 +3,7 @@ import { IndexActor } from "../actors/index-actor";
 import { StorageActor } from "../actors/storage-actor";
 import { UserActor } from "../actors/user-actor";
 import { MainPage } from '../pages/main-page';
+import { ProductActor } from "../actors/product-actor";
 import { ProductSelectionOpensusePage } from '../pages/product-selection-opensuse-page';
 import { InstallActor } from '../actors/install-actor';
 
@@ -20,6 +21,9 @@ test.describe('The main page', () => {
         const mainPage = new MainPage(page);
 
         await test.step("set lvm with all devices", async () => {
+            await mainPage.accessProduct();
+            await (new ProductActor(page)).handleProductRegistration();
+
             await mainPage.accessStorage();
             await (new StorageActor(page)).handleLvmAllDevices();
         });

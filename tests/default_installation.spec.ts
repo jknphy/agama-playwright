@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { IndexActor } from "../actors/index-actor";
 import { UserActor } from "../actors/user-actor";
+import { ProductActor } from "../actors/product-actor";
 import { MainPage } from '../pages/main-page';
 import { ProductSelectionOpensusePage } from '../pages/product-selection-opensuse-page';
 import { InstallActor } from '../actors/install-actor';
@@ -18,6 +19,9 @@ test.describe('The main page', () => {
     test('Default installation test', async ({ page }) => {
         const mainPage = new MainPage(page);
         await test.step("set mandatory user and root password", async () => {
+            await mainPage.accessProduct();
+            await (new ProductActor(page)).handleProductRegistration();
+
             await mainPage.accessUsers();
             await (new UserActor(page)).handleUser();
         });

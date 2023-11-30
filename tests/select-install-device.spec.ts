@@ -3,6 +3,7 @@ import { IndexActor } from "../actors/index-actor";
 import { UserActor } from "../actors/user-actor";
 import { StoragePage } from '../pages/storage-page';
 import { MainPage } from '../pages/main-page';
+import { ProductActor } from "../actors/product-actor";
 import { ProductSelectionOpensusePage } from '../pages/product-selection-opensuse-page';
 import { InstallationDevicePage } from '../pages/install-device-page';
 import { InstallActor } from '../actors/install-actor';
@@ -22,6 +23,9 @@ test.describe('The main page', () => {
         await test.step("select second available device for installation", async () => {
             const storagePage = new StoragePage(page);
             const installationDevice = new InstallationDevicePage(page);
+
+            await mainPage.accessProduct();
+            await (new ProductActor(page)).handleProductRegistration();
 
             await mainPage.accessStorage();
             await storagePage.accessInstallationDevice();

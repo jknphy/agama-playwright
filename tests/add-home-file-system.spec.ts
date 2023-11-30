@@ -3,6 +3,7 @@ import { AddFileSystemPage } from '../pages/add-file-system-page';
 import { IndexActor } from "../actors/index-actor";
 import { UserActor } from "../actors/user-actor";
 import { MainPage } from '../pages/main-page';
+import { ProductActor } from "../actors/product-actor";
 import { ProductSelectionOpensusePage } from '../pages/product-selection-opensuse-page';
 import { StoragePage } from '../pages/storage-page';
 import { InstallActor } from '../actors/install-actor';
@@ -20,6 +21,8 @@ test.describe('The main page', () => {
     test('Add /home file system', async ({ page }) => {
         const mainPage = new MainPage(page);
         await test.step("Start to add home file system", async () => {
+            await mainPage.accessProduct();
+            await (new ProductActor(page)).handleProductRegistration();
             await mainPage.accessStorage();
 
             const storagePage = new StoragePage(page);

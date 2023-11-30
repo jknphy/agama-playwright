@@ -3,6 +3,7 @@ import { IndexActor } from "../actors/index-actor";
 import { UserActor } from "../actors/user-actor";
 import { StoragePage } from '../pages/storage-page';
 import { MainPage } from '../pages/main-page';
+import { ProductActor } from "../actors/product-actor";
 import { ProductSelectionOpensusePage } from '../pages/product-selection-opensuse-page';
 import { EncryptionPasswordPopup } from '../pages/encryption-password-popup';
 import { InstallActor } from '../actors/install-actor';
@@ -20,6 +21,9 @@ test.describe('The main page', () => {
     test('Installation test with encrypted lvm file system', async ({ page }) => {
         const mainPage = new MainPage(page);
         await test.step("set encrypted lvm file system", async () => {
+            await mainPage.accessProduct();
+            await (new ProductActor(page)).handleProductRegistration();
+
             await mainPage.accessStorage();
 
             const storagePage = new StoragePage(page);

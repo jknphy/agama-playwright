@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { IndexActor } from "../actors/index-actor";
 import { UserActor } from "../actors/user-actor";
+import { ProductActor } from "../actors/product-actor";
 import { ProductSelectionOpensusePage } from '../pages/product-selection-opensuse-page';
 import { MainPage } from '../pages/main-page';
 import { StoragePage } from '../pages/storage-page';
@@ -19,6 +20,9 @@ test.describe('The main page', () => {
     test("Use logical volume management (LVM) as storage device for installation", async ({ page }) => {
         const mainPage = new MainPage(page);
         await test.step("Set LVM and Users", async () => {
+            await mainPage.accessProduct();
+            await (new ProductActor(page)).handleProductRegistration();
+            
             await mainPage.accessStorage();
 
             const storagePage = new StoragePage(page);
